@@ -456,6 +456,9 @@ func setupQueueFile(workspace string, vargs GAE) error {
 // If any template variables are provided, the file will be parsed and executed as
 // a text/template with the variables injected.
 func setupFile(workspace string, vargs GAE, gaeName string, suppliedName string) error {
+	fmt.Println("Setup file")
+	fmt.Println(suppliedName)
+	fmt.Println(vargs.TemplateVars)
 	// if no file given, give up
 	if suppliedName == "" {
 		return nil
@@ -486,10 +489,12 @@ func setupFile(workspace string, vargs GAE, gaeName string, suppliedName string)
 	}
 	defer out.Close()
 
+	fmt.Println("Templating...")
 	err = tmpl.Execute(out, vargs.TemplateVars)
 	if err != nil {
 		return fmt.Errorf("Error executing template: %s\n", err)
 	}
+	fmt.Println("End...")
 
 	return nil
 }
